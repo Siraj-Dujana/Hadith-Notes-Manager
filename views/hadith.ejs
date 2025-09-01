@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadith Notes Manager 📜</title>
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>📜 Hadith Notes Manager</h1>
+        <p>Organize and search Hadith references easily</p>
+    </header>
+
+    <main>
+        <!-- Add Hadith Form -->
+        <section class="form-section">
+            <h2>Add New Hadith</h2>
+            <form id="hadithForm" method="POST" action="/hadith">
+                <textarea name="hadith_text" placeholder="Enter hadith text..." required></textarea>
+                <input type="text" name="source" placeholder="Source (e.g. Bukhari)" required>
+                <input type="text" name="topic" placeholder="Topic (e.g. Prayer)" required>
+                <button type="submit">➕ Add Hadith</button>
+            </form>
+        </section>
+
+        <!-- Search -->
+         <form action="/hadith/search" method="post">
+             <section class="search-section">
+                 <h2>Search by Topic</h2>
+                 <input type="text" id="searchTopic" name="topic" placeholder="Enter topic (e.g. Fasting)" required>
+                 <button id="searchBtn">🔍 Search</button>
+                </section>
+            </form>
+
+        <!-- Display Hadiths -->
+        <section class="list-section">
+            <h2><%= msg_hadith %></h2>
+            <div id="hadithList" class="hadith-list">
+                
+                <% for( hadith of read_hadith ) { %>
+                    <!-- Example Hadith Card -->
+                    <div class="hadith-card">
+                        <p class="hadith-text">
+                            <%= hadith.hadith_text %>
+                        </p>
+                        <p class="hadith-source"><strong>Source:</strong>
+                            <%= hadith.source %>
+                        </p>
+                        <p class="hadith-topic"><strong>Topic:</strong>
+                            <%= hadith.topic %>
+                        </p>
+
+                        <!-- CRUD buttons -->
+                        <div class="actions">
+                            <!-- <a href="">
+                            </a> -->
+                            <form id="hadithForm" action="/hadith/<%= hadith._id %>" method="GET">
+                                
+                                <button class="btn edit-btn">✏️ Edit</button>
+                   
+                            </form>
+                            <br>
+                            <form id="hadithForm" action="/hadith/<%= hadith._id %>?_method=DELETE" method="POST">
+
+                    <button class=" btn delete-btn">🗑️ Delete</button>
+                            </form>
+                            <a href="/hadith/<%= hadith._id %>">
+
+                            </a>
+                        </div>
+                    </div>
+                    <% } %>
+                        <!-- More cards will be inserted dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Developed By SD|Developer</p>
+    </footer>
+</body>
+
+</html>
